@@ -1,0 +1,100 @@
+.virtual-keyboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.keyboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.keyboard-key {
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border: 2px solid #d0d0d0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.1s ease;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.keyboard-key:hover {
+  background: linear-gradient(145deg, #f5f5f5, #e8e8e8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.keyboard-key.pressed {
+  background: linear-gradient(145deg, #667eea, #764ba2);
+  color: white;
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.keyboard-key.modifier {
+  background: linear-gradient(145deg, #ffd89b, #19547b);
+  color: white;
+  font-weight: 600;
+}
+
+.keyboard-key.modifier:hover {
+  background: linear-gradient(145deg, #ffe4b5, #1e6a96);
+}
+
+.keyboard-key.modifier.pressed {
+  background: linear-gradient(145deg, #19547b, #ffd89b);
+}
+
+.keyboard-key.special {
+  background: linear-gradient(145deg, #f093fb, #f5576c);
+  color: white;
+  font-weight: 600;
+}
+
+.keyboard-key.special:hover {
+  background: linear-gradient(145deg, #f5a5fc, #f66a7d);
+}
+
+.keyboard-key.special.pressed {
+  background: linear-gradient(145deg, #f5576c, #f093fb);
+}
+
+.keyboard-status {
+  margin-top: 16px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .keyboard-wrapper {
+    padding: 10px;
+    gap: 4px;
+  }
+  
+  .keyboard-key {
+    height: 45px !important;
+    font-size: 12px !important;
+    min-width: 30px !important;
+  }
+  
+  .keyboard-row {
+    gap: 3px;
+  }
+}
+

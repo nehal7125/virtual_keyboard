@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Universal Virtual Keyboard",
+  "version": "1.0.0",
+  "description": "Type in any language on any website using a beautiful virtual keyboard",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["keyboard.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
+

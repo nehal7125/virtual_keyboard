@@ -1,0 +1,14 @@
+/* Styles for the content script */
+
+#virtual-keyboard-frame {
+  transition: transform 0.3s ease;
+}
+
+#virtual-keyboard-frame.show {
+  transform: translateY(0);
+}
+
+#virtual-keyboard-frame.hide {
+  transform: translateY(100%);
+}
+

@@ -22,8 +22,8 @@ export default function VirtualKeyboard({ onKeyPress, targetWebsite = false }: V
   const layout = keyboardLayouts[currentLanguage];
   const languages = Object.values(keyboardLayouts);
 
-  const handleKeyClick = useCallback((keyLayout: { key: string; display: string; code?: string; type?: string }) => {
-    const { key, display, code, type } = keyLayout;
+  const handleKeyClick = useCallback((keyLayout: { key: string; display: string; shiftDisplay?: string; code?: string; type?: string }) => {
+    const { key, display, shiftDisplay, code, type } = keyLayout;
 
     // Handle special keys
     if (type === 'special') {
@@ -90,11 +90,9 @@ export default function VirtualKeyboard({ onKeyPress, targetWebsite = false }: V
     // The 'key' property is just the English key code, 'display' is what we want to type
     let charToInsert = display;
     
-    // Apply shift or caps lock (for future enhancement)
-    if (shiftPressed || capsLock) {
-      // For now, we'll use the display character as-is
-      // In a full implementation, you'd map to uppercase versions
-      charToInsert = display;
+    // Apply shift - use shiftDisplay if available, otherwise use display
+    if ((shiftPressed || capsLock) && shiftDisplay) {
+      charToInsert = shiftDisplay;
     }
 
     // Insert the character
@@ -130,7 +128,7 @@ export default function VirtualKeyboard({ onKeyPress, targetWebsite = false }: V
   useEffect(() => {
     if (!targetWebsite) return;
 
-    const handlePhysicalKeyPress = (e: KeyboardEvent) => {
+    const handlePhysicalKeyPress = () => {
       // Allow normal typing, but we can intercept if needed
       // For now, we'll let physical keyboard work normally
     };
@@ -167,12 +165,19 @@ export default function VirtualKeyboard({ onKeyPress, targetWebsite = false }: V
               const isSpecial = keyLayout.type === 'special';
               const width = keyLayout.width || 1;
               
+              // Determine which character to display based on shift state
+              const displayChar = (shiftPressed || capsLock) && keyLayout.shiftDisplay 
+                ? keyLayout.shiftDisplay 
+                : keyLayout.display;
+              
               return (
                 <Button
                   key={`${rowIndex}-${keyIndex}`}
                   className={`keyboard-key ${
                     isPressed ? 'pressed' : ''
-                  } ${isModifier ? 'modifier' : ''} ${isSpecial ? 'special' : ''}`}
+                  } ${isModifier ? 'modifier' : ''} ${isSpecial ? 'special' : ''} ${
+                    (shiftPressed || capsLock) && keyLayout.shiftDisplay ? 'shift-active' : ''
+                  }`}
                   style={{
                     flex: width,
                     minWidth: `${width * 50}px`,
@@ -185,7 +190,7 @@ export default function VirtualKeyboard({ onKeyPress, targetWebsite = false }: V
                   onMouseUp={() => handleKeyUp(keyLayout)}
                   onMouseLeave={() => handleKeyUp(keyLayout)}
                 >
-                  {keyLayout.display}
+                  {displayChar}
                 </Button>
               );
             })}
